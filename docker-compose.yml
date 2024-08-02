@@ -1,0 +1,10 @@
+services:
+  opentofu:
+    image: ghcr.io/opentofu/opentofu:latest
+    working_dir: /home/tofu
+    volumes:
+      - .:/home/tofu
+    environment:
+      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+      - AWS_REGION=$AWS_REGION
