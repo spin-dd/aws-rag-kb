@@ -8,3 +8,8 @@ services:
       - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
       - AWS_REGION=$AWS_REGION
+      - TF_VAR_symbol_service=sample
+      - TF_VAR_symbol_env=ai
+      - TF_VAR_region=$AWS_REGION
+      - TF_VAR_admin_envs=ai
+      - TF_VAR_admin_region=$AWS_ADMIN_REGION

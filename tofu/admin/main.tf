@@ -5,4 +5,6 @@ provider "aws" {
 module "tfstate" {
   source = "../modules/tfstate"
   symbol = local.symbol
+  region = local.region
+  envs   = local.envs # 管理対象環境
 }

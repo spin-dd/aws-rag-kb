@@ -4,7 +4,19 @@ RAG with AWS Bedrock KnowlegeBase
 
 ## tofu
 
-.env の設定後、を設定する
+### .env
+
+- AWS のクレデンシャルなどを設定
+
+### バックエンドステート管理
+
+```bash
+docker compose run --rm opentofu -chdir=tofu/admin init
+docker compose run --rm opentofu -chdir=tofu/admin plan -out admin.plan
+docker compose run --rm opentofu -chdir=tofu/admin apply admin.plan
+```
+
+### RAG リソース
 
 ```bash
 docker compose run --rm opentofu -chdir=tofu/rag init
