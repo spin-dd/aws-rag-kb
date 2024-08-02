@@ -1,6 +1,8 @@
+# macos
+.DS_Store
+
 # .env
 .env
-
 
 # terraform
 .terraform
