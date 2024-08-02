@@ -1,8 +1,8 @@
-variable "symbol_admin_service" {
+variable "service" {
   type    = string
   default = "sample"
 }
-variable "symbol_admin_env" {
+variable "admin_env" {
   type    = string
   default = "admin"
 }
@@ -12,7 +12,7 @@ variable "admin_region" {
 }
 
 # 管理対象環境(CSVストリング)
-variable "admin_envs" {
+variable "admin_targets" {
   type    = string
   default = ""
 }
@@ -20,9 +20,9 @@ variable "admin_envs" {
 locals {
   region = var.admin_region
   symbol = {
-    service = var.symbol_admin_service
-    env     = var.symbol_admin_env
-    prefix  = "${var.symbol_admin_service}-${var.symbol_admin_env}"
+    service = var.service
+    env     = var.admin_env
+    prefix  = "${var.service}-${var.admin_env}"
   }
-  envs = split(",", var.admin_envs)
+  envs = split(",", var.admin_targets)
 }
