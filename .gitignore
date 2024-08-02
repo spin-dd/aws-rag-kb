@@ -10,3 +10,8 @@ terraform.d
 node_modules
 terraform.tfstate*
 *.plan
+
+
+# drawio
+
+.*.bkp
