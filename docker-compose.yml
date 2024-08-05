@@ -1,6 +1,10 @@
 services:
-  opentofu:
-    image: ghcr.io/opentofu/opentofu:latest
+  tool:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        - WORKDIR=/home/tofu
     working_dir: /home/tofu
     volumes:
       - .:/home/tofu
@@ -16,6 +20,3 @@ services:
       - TF_VAR_database_table_name=${DATABASE_TABLE_NAME}
       - TF_VAR_database_user=${DATABASE_USER}
       - TF_VAR_database_master_user=${DATABASE_MASTER_USER}
-
-    py:
-      
