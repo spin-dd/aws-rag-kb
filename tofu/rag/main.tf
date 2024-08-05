@@ -21,5 +21,17 @@ module "vpc" {
   #
 }
 
+# aurora cluster
+
+module "aurora" {
+  source = "../modules/aurora"
+  symbol = local.symbol
+  region = local.region
+  #
+  subnet_group_name = module.vpc.private_subnet_group_name
+  cluster_zones     = module.vpc.private_zones
+  instance_zone     = module.vpc.private_zones[0]
+  database          = local.database
+}
 
 
