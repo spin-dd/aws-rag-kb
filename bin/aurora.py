@@ -5,6 +5,9 @@ import re
 import boto3
 import click
 from pydantic import BaseModel
+from bedrag.models import Knowlege
+from sqlalchemy import create_engine
+from sqlalchemy.schema import CreateTable
 
 
 def setup_boto3():
@@ -97,6 +100,17 @@ class Aurora(BaseModel):
         )
 
 
+def create_table_ddl():
+
+    engine = create_engine("postgresql://")
+
+    tables = map(
+        lambda t: str(CreateTable(t).compile(engine)),
+        Knowlege.metadata.tables.values(),
+    )
+    return "\n".join(list(tables))
+
+
 @click.group()
 @click.option("--tf_output", "-to", default=None)
 @click.pass_context
@@ -162,6 +176,31 @@ def create_role(ctx):
     sql = """CREATE ROLE {username} WITH PASSWORD '{password}' LOGIN;""".format(**value)
     res = aurora.execute(sql)
 
+    print(json.dumps(res, indent=2))
+
+
+@group.command()
+@click.pass_context
+def create_table(ctx):
+    """KBテーブル作成"""
+    aurora: Aurora = ctx.obj["aurora"]
+    sql = create_table_ddl()
+    res = aurora.execute(sql)
+    print(json.dumps(res, indent=2))
+
+
+@group.command()
+@click.pass_context
+def create_vector_index(ctx):
+    """ベクトルフィールドにインデックス作成"""
+    aurora: Aurora = ctx.obj["aurora"]
+    field = Knowlege.get_vector_field()
+    params = ctx.obj["database_table_name"]
+    params["field"] = field.name
+    sql = "CREATE INDEX on {schema}.{table} USING hnsw ({field} vector_cosine_ops);".format(
+        **params
+    )
+    res = aurora.execute(sql)
     print(json.dumps(res, indent=2))
 
 
