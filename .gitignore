@@ -4,6 +4,9 @@
 # .env
 .env
 
+# secrets
+.secrets
+
 # terraform
 .terraform
 terraform.d
@@ -13,6 +16,5 @@ terraform.tfstate*
 
 
 # drawio
-
 .*.bkp
 .*.dtmp
