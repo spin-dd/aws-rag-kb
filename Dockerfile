@@ -1,4 +1,5 @@
 FROM python:3
+ARG BASE
 
 RUN apt-get update
 RUN apt-get -y install locales && \
@@ -22,10 +23,12 @@ RUN chmod a+r /etc/apt/sources.list.d/opentofu.list
 RUN apt-get update &&apt-get install -y tofu
 
 #
-WORKDIR $WORKDIR
-COPY pyproject.toml poetry.lock $WORKDIR
+WORKDIR ${BASE} 
+COPY pyproject.toml poetry.lock README.md ${BASE}/
+COPY bedrag/ ${BASE}/bedrag/
 #
 RUN pip install --upgrade pip poetry
 RUN poetry config virtualenvs.create false
-RUN poetry install --no-root --no-dev
+# RUN poetry install --no-root --no-dev
+RUN poetry install --no-dev
 
