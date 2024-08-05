@@ -132,6 +132,16 @@ def group(ctx, tf_output):
 
 @group.command()
 @click.pass_context
+def setup_vector(ctx):
+    """vector(pgVextro) の設定"""
+    aurora: Aurora = ctx.obj["aurora"]
+    sql = """CREATE EXTENSION IF NOT EXISTS vector;"""
+    res = aurora.execute(sql)
+    print(json.dumps(res, indent=2))
+
+
+@group.command()
+@click.pass_context
 def create_schema(ctx):
     """スキーマ作成"""
     aurora: Aurora = ctx.obj["aurora"]
