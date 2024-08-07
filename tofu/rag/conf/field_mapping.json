@@ -1,0 +1,6 @@
+{
+  "primary_key_field": "id",
+  "vector_field": "embedding",
+  "metadata_field": "bedrock_meta",
+  "text_field": "chunks"
+}
