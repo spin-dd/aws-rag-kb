@@ -5,6 +5,7 @@ from urllib.parse import urlparse
 import re
 import json
 from pathlib import Path
+from bedrag.aws import setup_boto3
 
 
 class NcacFaqSpider(scrapy.Spider):
@@ -26,7 +27,7 @@ class NcacFaqSpider(scrapy.Spider):
         aws_info = aws and Path(aws)
         if aws_info and aws_info.exists():
             self.aws_info = json.load(aws_info.open())
-
+        setup_boto3()
 
     def parse(self, response):
         anchors = response.css("a[href]")

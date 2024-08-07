@@ -8,17 +8,7 @@ from pydantic import BaseModel
 from bedrag.models import Knowlege
 from sqlalchemy import create_engine
 from sqlalchemy.schema import CreateTable
-
-
-def setup_boto3():
-    keys = {
-        "profile_name": "AWS_PROFILE",
-        "region_name": "AWS_REGION",
-        "aws_access_key_id": "AWS_ACCESS_KEY_ID",
-        "aws_secret_access_key": "AWS_SECRET_ACCESS_KEY",
-    }
-    params = dict((k, os.environ[v]) for k, v in keys.items() if v in os.environ)
-    boto3.setup_default_session(**params)
+from bedrag.aws import setup_boto3
 
 
 def get_sm_clinet():
