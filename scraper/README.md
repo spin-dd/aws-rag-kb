@@ -5,3 +5,9 @@
 - 同時に、対応するメタデータ JSON を S3 バケットに保存する
 
 ![](docs/scraper.drawio.png)
+
+## ナレッジベース同期
+
+```bash
+docker compose run --rm tool bin/kb.py -to .secrets/rag.json sync
+```
