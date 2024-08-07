@@ -51,3 +51,11 @@ docker compose run --rm tool scrapy crawl ncacfaq -a aws=.secrets/rag.json
 ```bash
 docker compose run --rm tool bin/kb.py -to .secrets/rag.json sync
 ```
+
+## テスト
+
+```bash
+docker compose run --rm tool bin/rag.py -to .secrets/rag.json query 地震で壊れた屋根を訪問した業者に応急処置の依頼をしたら高額請求されてしまいました。 -s hdknr/faq
+docker compose run --rm tool bin/rag.py -to .secrets/rag.json query "ふるさと納税をキャンセルしたいです" -s hdknr/faq
+docker compose run --rm tool bin/rag.py -to .secrets/rag.json query "チケット転売で購入したのだがチケットが届きません" -s hdknr/faq
+```
