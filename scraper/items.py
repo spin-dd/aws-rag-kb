@@ -12,3 +12,4 @@ class RagSourceItem:
     path: str
     text: str
     meta: dict
+    bucket: str
