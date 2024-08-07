@@ -45,3 +45,9 @@ docker compose run --rm tool tofu -chdir=tofu/rag output -json > .secrets/rag.js
 ```bash
 docker compose run --rm tool scrapy crawl ncacfaq -a aws=.secrets/rag.json
 ```
+
+### 同期
+
+```bash
+docker compose run --rm tool bin/kb.py -to .secrets/rag.json sync
+```
