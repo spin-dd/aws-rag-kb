@@ -1,0 +1,22 @@
+services:
+  tool:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        BASE: /home/tofu
+    working_dir: /home/tofu
+    volumes:
+      - .:/home/tofu
+    environment:
+      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+      - AWS_REGION=$AWS_REGION
+      - TF_VAR_service=${SERVICE:-sample}
+      - TF_VAR_env=${ENV:-ai}
+      - TF_VAR_region=$AWS_REGION
+      - TF_VAR_admin_region=$AWS_ADMIN_REGION
+      - TF_VAR_admin_targets=${ADMIN_ENVS:-ai}
+      - TF_VAR_database_table_name=${DATABASE_TABLE_NAME}
+      - TF_VAR_database_user=${DATABASE_USER}
+      - TF_VAR_database_master_user=${DATABASE_MASTER_USER}
