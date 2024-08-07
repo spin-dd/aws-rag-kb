@@ -13,3 +13,14 @@ output "AURORA_MASTER_USER_SECERT_ARN" {
 output "AURORA_USER_SECERT_ARN" {
   value = module.aurora.user_secret.arn
 }
+
+output "DATASOURCE_BUCKET" {
+  value = module.bedrock.s3.id
+}
+
+output "BEDROCK_KB_ID" {
+  value = module.bedrock.kb.id
+}
+output "BEDROCK_DS_ID" {
+  value = module.bedrock.ds.data_source_id
+}

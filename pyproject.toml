@@ -14,6 +14,8 @@ fastapi = "^0.112.0"
 sqlalchemy = "^2.0.31"
 pgvector = "^0.3.2"
 psycopg2-binary = "^2.9.9"
+scrapy = "^2.11.2"
+markdownify = "^0.13.1"
 
 
 [tool.poetry.group.dev.dependencies]

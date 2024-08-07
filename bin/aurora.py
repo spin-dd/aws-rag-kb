@@ -8,17 +8,8 @@ from pydantic import BaseModel
 from bedrag.models import Knowlege
 from sqlalchemy import create_engine
 from sqlalchemy.schema import CreateTable
-
-
-def setup_boto3():
-    keys = {
-        "profile_name": "AWS_PROFILE",
-        "region_name": "AWS_REGION",
-        "aws_access_key_id": "AWS_ACCESS_KEY_ID",
-        "aws_secret_access_key": "AWS_SECRET_ACCESS_KEY",
-    }
-    params = dict((k, os.environ[v]) for k, v in keys.items() if v in os.environ)
-    boto3.setup_default_session(**params)
+from bedrag.aws import setup_boto3
+from bedrag.utils import set_environ_from_tf
 
 
 def get_sm_clinet():
@@ -39,9 +30,7 @@ def get_rds_clint():
 def get_secret_arn(name):
     # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/secretsmanager/client/list_secrets.html
     client = get_sm_clinet()
-    values = client.list_secrets(Filters=[dict(Key="name", Values=[name])])[
-        "SecretList"
-    ]
+    values = client.list_secrets(Filters=[dict(Key="name", Values=[name])])["SecretList"]
     if len(values) == 1:
         return values[0]["ARN"]
     return
@@ -65,9 +54,7 @@ def get_secret_value(id, is_json=True):
 def get_rds_cluster_arn(identfire):
     client = get_rds_clint()
     # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/rds/client/describe_db_clusters.html
-    values = client.describe_db_clusters(
-        DBClusterIdentifier=os.environ["KB_DATABASE_CLUSTER"]
-    )["DBClusters"]
+    values = client.describe_db_clusters(DBClusterIdentifier=os.environ["KB_DATABASE_CLUSTER"])["DBClusters"]
     if len(values) == 1:
         return values[0]["DBClusterArn"]
 
@@ -95,9 +82,7 @@ class Aurora(BaseModel):
             secretArn = self.secret_arn
 
         client = get_rds_ds_client()
-        return client.execute_statement(
-            resourceArn=clusterArn, secretArn=secretArn, sql=sql, database=self.database
-        )
+        return client.execute_statement(resourceArn=clusterArn, secretArn=secretArn, sql=sql, database=self.database)
 
 
 def create_table_ddl():
@@ -116,10 +101,7 @@ def create_table_ddl():
 def group(ctx, tf_output):
     ctx.ensure_object(dict)
 
-    if tf_output:
-        for key, value in json.load(open(tf_output)).items():
-            os.environ[key] = value["value"]
-
+    set_environ_from_tf(tf_output)
     setup_boto3()
 
     ma = re.search(
@@ -196,9 +178,7 @@ def create_vector_index(ctx):
     field = Knowlege.get_vector_field()
     params = ctx.obj["database_table_name"]
     params["field"] = field.name
-    sql = "CREATE INDEX on {schema}.{table} USING hnsw ({field} vector_cosine_ops);".format(
-        **params
-    )
+    sql = "CREATE INDEX on {schema}.{table} USING hnsw ({field} vector_cosine_ops);".format(**params)
     res = aurora.execute(sql)
     print(json.dumps(res, indent=2))
 
@@ -210,9 +190,7 @@ def grant_schema(ctx):
     aurora: Aurora = ctx.obj["aurora"]
     value = get_secret_value(os.environ["AURORA_USER_SECERT_ARN"])
     table_names = ctx.obj["database_table_name"]
-    sql = """GRANT ALL ON SCHEMA {schema} to {username};""".format(
-        **table_names, **value
-    )
+    sql = """GRANT ALL ON SCHEMA {schema} to {username};""".format(**table_names, **value)
     res = aurora.execute(sql)
     print(json.dumps(res, indent=2))
 
