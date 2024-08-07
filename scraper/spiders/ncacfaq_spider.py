@@ -4,6 +4,7 @@ import markdownify
 from urllib.parse import urlparse
 import re
 import json
+from pathlib import Path
 
 
 class NcacFaqSpider(scrapy.Spider):
@@ -19,6 +20,13 @@ class NcacFaqSpider(scrapy.Spider):
     URL_RE = re.compile(r"^/faq/show/(?P<id>\d+)$")
     DOC_CLASS = "国民生活センター"
     DOCUMENT = "消費者トラブルFAQ"
+
+    def __init__(self, aws=None, pages=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        aws_info = aws and Path(aws)
+        if aws_info and aws_info.exists():
+            self.aws_info = json.load(aws_info.open())
+
 
     def parse(self, response):
         anchors = response.css("a[href]")
@@ -38,8 +46,10 @@ class NcacFaqSpider(scrapy.Spider):
                     doc_class=self.DOC_CLASS,
                     document=self.DOCUMENT,
                 )
+                bucket = self.aws_info and self.aws_info.get("DATASOURCE_BUCKET", {}).get("value", "")
                 yield RagSourceItem(
                     text=source,
                     path=path,
                     meta=json.dumps(meta, ensure_ascii=False, indent=2),
+                    bucket=bucket,
                 )
