@@ -40,4 +40,6 @@ locals {
     user        = regex("^(?P<username>[^.]+)\\s(?P<password>[^.]+)$", var.database_user)
     master_user = regex("^(?P<username>[^.]+)\\s(?P<password>[^.]+)$", var.database_master_user)
   }
+  # Aurora RAG Table
+  field_mapping = jsondecode(file("${path.module}/conf/field_mapping.json"))
 }

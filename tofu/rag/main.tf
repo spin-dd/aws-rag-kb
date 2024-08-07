@@ -35,3 +35,16 @@ module "aurora" {
 }
 
 
+# bedrock
+module "bedrock" {
+  source = "../modules/bedrock"
+  symbol = local.symbol
+  region = local.region
+  #
+  rds_cluster     = module.aurora.cluster
+  rds_user_secret = module.aurora.user_secret
+  rds_table_anme  = module.aurora.table_name
+  field_mapping   = local.field_mapping
+}
+
+
