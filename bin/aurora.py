@@ -9,6 +9,7 @@ from bedrag.models import Knowlege
 from sqlalchemy import create_engine
 from sqlalchemy.schema import CreateTable
 from bedrag.aws import setup_boto3
+from bedrag.utils import set_environ_from_tf
 
 
 def get_sm_clinet():
@@ -106,10 +107,7 @@ def create_table_ddl():
 def group(ctx, tf_output):
     ctx.ensure_object(dict)
 
-    if tf_output:
-        for key, value in json.load(open(tf_output)).items():
-            os.environ[key] = value["value"]
-
+    set_environ_from_tf(tf_output)
     setup_boto3()
 
     ma = re.search(
