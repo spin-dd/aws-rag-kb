@@ -10,6 +10,7 @@
 from bedrag.s3 import put_text
 from .items import RagSourceItem
 
+
 class RagSoourcePipeline:
     def process_item(self, item: RagSourceItem, spider):
         put_text(item.text, item.bucket, item.path)

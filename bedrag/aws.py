@@ -3,7 +3,7 @@ import os
 
 
 def setup_boto3():
-    """ 環境変数より boto3にクレデンシャル情報を設定する"""
+    """環境変数より boto3にクレデンシャル情報を設定する"""
     keys = {
         "profile_name": "AWS_PROFILE",
         "region_name": "AWS_REGION",
