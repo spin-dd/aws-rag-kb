@@ -16,6 +16,10 @@ variable "region" {
 
 }
 
+variable "domain_name" {
+  type = string
+}
+
 variable "database_table_name" {
   type    = string
   default = "rag.bedrock.kb"
