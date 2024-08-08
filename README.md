@@ -25,6 +25,23 @@ docker compose run --rm tool tofu -chdir=tofu/rag apply rag.plan
 
 ```
 
+ECR:
+
+```bash
+docker compose run --rm tool tofu -chdir=tofu/rag plan -out rag.plan -target=module.ecr
+docker compose run --rm tool tofu -chdir=tofu/rag apply rag.plan
+docker compose run --rm tool tofu -chdir=tofu/rag output -json > .secrets/rag.json
+
+```
+
+API Gateway:
+
+```bash
+docker compose run --rm tool tofu -chdir=tofu/rag plan -out rag.plan -target=module.apigw
+docker compose run --rm tool tofu -chdir=tofu/rag apply rag.plan
+docker compose run --rm tool tofu -chdir=tofu/rag output -json > .secrets/rag.json
+```
+
 ### データベース
 
 ```bash
