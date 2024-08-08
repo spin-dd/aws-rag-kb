@@ -25,6 +25,23 @@ docker compose run --rm tool tofu -chdir=tofu/rag apply rag.plan
 
 ```
 
+ECR:
+
+```bash
+docker compose run --rm tool tofu -chdir=tofu/rag plan -out rag.plan -target=module.ecr
+docker compose run --rm tool tofu -chdir=tofu/rag apply rag.plan
+docker compose run --rm tool tofu -chdir=tofu/rag output -json > .secrets/rag.json
+
+```
+
+API Gateway:
+
+```bash
+docker compose run --rm tool tofu -chdir=tofu/rag plan -out rag.plan -target=module.apigw
+docker compose run --rm tool tofu -chdir=tofu/rag apply rag.plan
+docker compose run --rm tool tofu -chdir=tofu/rag output -json > .secrets/rag.json
+```
+
 ### データベース
 
 ```bash
@@ -58,4 +75,10 @@ docker compose run --rm tool bin/kb.py -to .secrets/rag.json sync
 docker compose run --rm tool bin/rag.py -to .secrets/rag.json query 地震で壊れた屋根を訪問した業者に応急処置の依頼をしたら高額請求されてしまいました。 -s hdknr/faq
 docker compose run --rm tool bin/rag.py -to .secrets/rag.json query "ふるさと納税をキャンセルしたいです" -s hdknr/faq
 docker compose run --rm tool bin/rag.py -to .secrets/rag.json query "チケット転売で購入したのだがチケットが届きません" -s hdknr/faq
+```
+
+### API
+
+```bash
+docker compose run --rm tool bin/rag.py -to .secrets/rag.json api "チケット転売で購入したのだがチケットが届きません"
 ```

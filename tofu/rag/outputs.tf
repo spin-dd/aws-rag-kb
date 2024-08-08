@@ -24,3 +24,11 @@ output "BEDROCK_KB_ID" {
 output "BEDROCK_DS_ID" {
   value = module.bedrock.ds.data_source_id
 }
+
+output "FUNCTION_ECR_KB" {
+  value = module.ecr.repos.kb.name
+}
+
+output "API_DOMAIN_NAME" {
+  value = module.apigw.domain_name
+}

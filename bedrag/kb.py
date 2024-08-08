@@ -10,13 +10,8 @@ from langchain_aws.retrievers import AmazonKnowledgeBasesRetriever
 boto3.set_stream_logger()
 
 
-def create_client(region_name=None, name="bedrock-runtime"):
-    bedrock_client = boto3.client(name)
-    return bedrock_client
-
-
 def create_llm(bedrock_client=None, model_version_id=None, region_name=None):
-    bedrock_client = bedrock_client or create_client(region_name=region_name)
+    bedrock_client = bedrock_client or boto3.client("bedrock-runtime")
     model_version_id = model_version_id or os.environ["BEDROCK_LLM_MODEL_ID"]
     bedrock_llm = ChatBedrock(model_id=model_version_id, client=bedrock_client, model_kwargs={"temperature": 0})
     return bedrock_llm
@@ -27,8 +22,10 @@ def create_retriever(knowledge_base_id=None, client=None, retrieval_config=None,
     knowledge_base_id = knowledge_base_id or os.environ["BEDROCK_KB_ID"]
 
     # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/bedrock-agent-runtime.html
-    client = client or create_client(name="bedrock-agent-runtime")
+    client = client or boto3.client("bedrock-agent-runtime")
     retrieval_config = retrieval_config or create_retrieval_config()
+
+    # https://github.com/langchain-ai/langchain/blob/d77c7c4236df8e56fbe3acc8e0a71b57b48f1678/libs/community/langchain_community/retrievers/bedrock.py#L21
     retriever = AmazonKnowledgeBasesRetriever(
         knowledge_base_id=knowledge_base_id,
         retrieval_config=retrieval_config,

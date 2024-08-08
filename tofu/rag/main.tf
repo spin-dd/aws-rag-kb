@@ -48,3 +48,20 @@ module "bedrock" {
 }
 
 
+
+module "ecr" {
+  source = "../modules/ecr"
+  symbol = local.symbol
+  #
+}
+
+
+
+module "apigw" {
+  source = "../modules/apigw"
+  symbol = local.symbol
+  #
+  kb          = module.bedrock.kb
+  domain_name = var.domain_name
+  ecr         = module.ecr.repos.kb
+}
