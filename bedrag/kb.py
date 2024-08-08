@@ -24,6 +24,8 @@ def create_retriever(knowledge_base_id=None, client=None, retrieval_config=None,
     # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/bedrock-agent-runtime.html
     client = client or boto3.client("bedrock-agent-runtime")
     retrieval_config = retrieval_config or create_retrieval_config()
+
+    # https://github.com/langchain-ai/langchain/blob/d77c7c4236df8e56fbe3acc8e0a71b57b48f1678/libs/community/langchain_community/retrievers/bedrock.py#L21
     retriever = AmazonKnowledgeBasesRetriever(
         knowledge_base_id=knowledge_base_id,
         retrieval_config=retrieval_config,
