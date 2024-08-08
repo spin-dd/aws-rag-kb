@@ -3,6 +3,7 @@ import os
 
 from fastapi import FastAPI, Request
 from fastapi.responses import StreamingResponse
+from bedrag.aws import setup_boto3
 
 from bedrag.request import Query
 
@@ -12,10 +13,13 @@ logger.setLevel(level=logging.DEBUG)
 
 app = FastAPI()
 
-for key in ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"]:
-    conf_key = f"CONF_{key}"
-    if conf_key in os.environ:
-        os.environ[key] = os.environ[conf_key]
+@app.on_event("startup")
+async def on_startup():
+    for key in ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_REGION"]:
+        conf_key = f"CONF_{key}"
+        if conf_key in os.environ:
+            os.environ[key] = os.environ[conf_key]
+    setup_boto3()
 
 
 def response(request: Request, query: Query) -> StreamingResponse:
