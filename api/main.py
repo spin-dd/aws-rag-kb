@@ -4,14 +4,14 @@ import os
 from fastapi import FastAPI, Request
 from fastapi.responses import StreamingResponse
 from bedrag.aws import setup_boto3
-
 from bedrag.request import Query
 
 logger = logging.getLogger()
-logger.setLevel(level=logging.DEBUG) 
+logger.setLevel(level=logging.DEBUG)
 
 
 app = FastAPI()
+
 
 @app.on_event("startup")
 async def on_startup():
@@ -24,7 +24,9 @@ async def on_startup():
 
 def response(request: Request, query: Query) -> StreamingResponse:
     prompt_name = os.environ["PROMPT_SMITH_NAME"]
-    return StreamingResponse(content=query.get_answer(prompt_name), media_type="text/event-stream")
+    return StreamingResponse(
+        content=query.get_answer(prompt_name), media_type="text/event-stream"
+    )
 
 
 def response_sync(request: Request, query: Query) -> dict:
