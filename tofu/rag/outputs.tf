@@ -28,3 +28,7 @@ output "BEDROCK_DS_ID" {
 output "FUNCTION_ECR_KB" {
   value = module.ecr.repos.kb.name
 }
+
+output "API_DOMAIN_NAME" {
+  value = module.apigw.domain_name
+}
