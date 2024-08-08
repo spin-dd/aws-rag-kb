@@ -76,3 +76,9 @@ docker compose run --rm tool bin/rag.py -to .secrets/rag.json query 地震で壊
 docker compose run --rm tool bin/rag.py -to .secrets/rag.json query "ふるさと納税をキャンセルしたいです" -s hdknr/faq
 docker compose run --rm tool bin/rag.py -to .secrets/rag.json query "チケット転売で購入したのだがチケットが届きません" -s hdknr/faq
 ```
+
+### API
+
+```bash
+docker compose run --rm tool bin/rag.py -to .secrets/rag.json api "チケット転売で購入したのだがチケットが届きません"
+```
