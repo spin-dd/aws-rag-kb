@@ -54,7 +54,6 @@ def query_stream(ctx, question, smith_name, document, doc_class):
         async for value in query.get_answer(smith_name):
             res += value
             print(value, end="")
-        #print(res)
 
     asyncio.run(async_wrap())
 
