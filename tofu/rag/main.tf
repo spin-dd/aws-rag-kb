@@ -71,3 +71,13 @@ module "apigw" {
   domain_name = var.domain_name
   ecr         = module.ecr.repos.kb
 }
+
+# saving
+
+module "saving" {
+  source = "../modules/saving"
+  symbol = local.symbol
+  #
+  aurora_cluster = module.aurora.cluster
+  awstools       = module.tools.lambda
+}
