@@ -21,8 +21,23 @@ module "vpc" {
   #
 }
 
-# aurora cluster
+# ecr for lambda functions
+module "ecr" {
+  source = "../modules/ecr"
+  symbol = local.symbol
+  #
+}
 
+# aws tools
+
+module "tools" {
+  source = "../modules/tools"
+  symbol = local.symbol
+  #
+  ecr = module.ecr.repos.tools
+}
+
+# aurora cluster
 module "aurora" {
   source = "../modules/aurora"
   symbol = local.symbol
@@ -33,7 +48,6 @@ module "aurora" {
   instance_zone     = module.vpc.private_zones[0]
   database          = local.database
 }
-
 
 # bedrock
 module "bedrock" {
@@ -48,15 +62,7 @@ module "bedrock" {
 }
 
 
-
-module "ecr" {
-  source = "../modules/ecr"
-  symbol = local.symbol
-  #
-}
-
-
-
+# api gateway
 module "apigw" {
   source = "../modules/apigw"
   symbol = local.symbol
