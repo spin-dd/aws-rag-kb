@@ -29,6 +29,11 @@ output "FUNCTION_ECR_KB" {
   value = module.ecr.repos.kb.name
 }
 
+output "FUNCTION_ECR_TOOLS" {
+  value = module.ecr.repos.tools.name
+}
+
+
 output "API_DOMAIN_NAME" {
   value = module.apigw.domain_name
 }
