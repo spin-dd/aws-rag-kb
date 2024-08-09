@@ -1,6 +1,6 @@
 variable "symbol" {}
 
 locals {
-  apps = ["kb"]
+  apps = ["kb", "tools"]
 }
 

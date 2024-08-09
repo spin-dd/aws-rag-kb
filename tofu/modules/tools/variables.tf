@@ -1,0 +1,3 @@
+variable "symbol" {}
+variable "ecr" {}
+
