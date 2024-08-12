@@ -21,21 +21,7 @@ module "vpc" {
   #
 }
 
-# ecr for lambda functions
-module "ecr" {
-  source = "../modules/ecr"
-  symbol = local.symbol
-  #
-}
 
-# aws tools
-
-module "tools" {
-  source = "../modules/tools"
-  symbol = local.symbol
-  #
-  ecr = module.ecr.repos.tools
-}
 
 # aurora cluster
 module "aurora" {
@@ -62,6 +48,14 @@ module "bedrock" {
 }
 
 
+# ecr for lambda functions
+module "ecr" {
+  source = "../modules/ecr"
+  symbol = local.symbol
+  #
+}
+
+
 # api gateway
 module "apigw" {
   source = "../modules/apigw"
@@ -70,6 +64,15 @@ module "apigw" {
   kb          = module.bedrock.kb
   domain_name = var.domain_name
   ecr         = module.ecr.repos.kb
+}
+
+# aws tools
+
+module "tools" {
+  source = "../modules/tools"
+  symbol = local.symbol
+  #
+  ecr = module.ecr.repos.tools
 }
 
 # saving
