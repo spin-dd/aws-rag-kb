@@ -15,11 +15,15 @@ app = FastAPI()
 
 @app.on_event("startup")
 async def on_startup():
-    for key in ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_REGION"]:
+    for key in [
+        "AWS_ACCESS_KEY_ID",
+        "AWS_SECRET_ACCESS_KEY",
+        "AWS_REGION",
+        "AWS_DEFAULT_REGION",
+    ]:
         conf_key = f"CONF_{key}"
         if conf_key in os.environ:
             os.environ[key] = os.environ[conf_key]
-    setup_boto3()
 
 
 def response(request: Request, query: Query) -> StreamingResponse:
