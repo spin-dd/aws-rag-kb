@@ -5,15 +5,11 @@ resource "aws_lambda_function" "kb" {
     variables = {
       BEDROCK_KB_ID        = var.kb.id
       BEDROCK_LLM_MODEL_ID = "anthropic.claude-3-sonnet-20240229-v1:0"
-      PROMPT_SMITH_NAME    = ""
-      LANGCHAIN_PROJECT    = ""
       LANGCHAIN_ENDPOINT   = "https://api.smith.langchain.com"
       LANGCHAIN_TRACING_V2 = "true"
-      CONF_AWS_REGION      = "us-west-2"
-      #
-      LANGCHAIN_API_KEY          = "" # 
-      CONF_AWS_ACCESS_KEY_ID     = "" # 
-      CONF_AWS_SECRET_ACCESS_KEY = "" # 
+      LANGCHAIN_PROJECT    = ""
+      LANGCHAIN_API_KEY    = ""
+      PROMPT_SMITH_NAME    = ""
     }
   }
   function_name = "${var.symbol.prefix}-kb"
