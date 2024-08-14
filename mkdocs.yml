@@ -1,0 +1,19 @@
+site_name: aws-rag-kb
+theme:
+  name: material
+markdown_extensions:
+  - toc:
+      permalink: True
+  - admonition
+  - codehilite
+  - pymdownx.details
+  - pymdownx.superfences
+
+plugins:
+  - with-pdf:
+      toc_title: 目次
+      toc_level: 3
+      enabled_if_env: ENABLE_PDF_EXPORT
+      author: "SPIN D&D"
+      copyright: "SPIN D&D"
+      cover_subtitle: "AWS Bedrock KnowledgeBase RAGサンプル"

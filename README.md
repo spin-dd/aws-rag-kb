@@ -1,6 +1,6 @@
 # aws-rag-kb
 
-RAG with AWS Bedrock KnowlegeBase
+RAG with AWS Bedrock KnowledgeBase
 
 ## tofu
 
