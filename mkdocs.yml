@@ -16,4 +16,4 @@ plugins:
       enabled_if_env: ENABLE_PDF_EXPORT
       author: "SPIN D&D"
       copyright: "SPIN D&D"
-      cover_subtitle: "AWS Bedrock KnowlegeBase RAGサンプル"
+      cover_subtitle: "AWS Bedrock KnowledgeBase RAGサンプル"

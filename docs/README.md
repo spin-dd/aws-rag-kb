@@ -1,4 +1,4 @@
-# AWS Bedrock KnowlegeBase RAG サンプル
+# AWS Bedrock KnowledgeBase RAG サンプル
 
 - [概要](01.prefacce.md)
 - [ローカル実行環境](02.local.md)
