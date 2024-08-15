@@ -30,6 +30,7 @@ resource "aws_bedrockagent_knowledge_base" "this" {
       }
     }
   }
+  depends_on = [aws_iam_role.this]
 }
 
 
@@ -47,4 +48,7 @@ resource "aws_bedrockagent_data_source" "this" {
       bucket_arn = aws_s3_bucket.this.arn
     }
   }
+  data_deletion_policy = "RETAIN" # データソースを削除すると基になるすべてのデータを保持
+  # https://docs.aws.amazon.com/ja_jp/bedrock/latest/userguide/knowledge-base-ds-manage.html
+  # データソースの削除ポリシーが Delete に設定されている場合、設定またはベクトルストアへのアクセスに問題があるため、データソースが削除プロセスを完了できない可能性があります。
 }
