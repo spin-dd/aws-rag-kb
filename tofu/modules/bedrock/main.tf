@@ -30,6 +30,7 @@ resource "aws_bedrockagent_knowledge_base" "this" {
       }
     }
   }
+  depends_on = [aws_iam_role.this]
 }
 
 
